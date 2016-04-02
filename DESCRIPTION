@@ -1,0 +1,17 @@
+Package: ggTimeSeries
+Type: Package
+Title: Nicer Time Series Visualisations with ggplot syntax.
+Version: 0.1
+Date: 2016-01-24
+Author: Aditya Kothari [aut, cre], Ather [cph]
+Maintainer: Aditya Kothari <aditya.kothari@atherenergy.com>
+Description: Provides geoms for novel time series visualisations.
+URL: https://github.com/Ather-Energy/ggTimeSeries
+BugReports: https://github.com/Ather-Energy/ggTimeSeries/issues
+License: MIT
+LazyData: TRUE
+Depends:
+Imports:
+   data.table,
+   ggplot2
+RoxygenNote: 5.0.1

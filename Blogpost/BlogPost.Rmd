@@ -1,0 +1,313 @@
+---
+title: "Fashion Trends in Time Series"
+output:
+   html_document:
+      fig_width: 10
+      fig_height: 4
+---
+
+
+```{r initialisation, echo = FALSE, message = F, warning = F}
+library(ggplot2)
+library(data.table)
+library(ggTimeSeries)
+library(ggthemes) # only for the Excel 97 look chart
+library(zoo)
+library(gridExtra)
+```
+
+
+```{r dataloading, echo = FALSE, message = F, warning = F, results = 'hide'}
+
+vcStations = c("CA005012961", "USC00456898", "US1COGN0018", "USC00051660", "USC00420072", "CA00117CA90", "CA001108906", "US1COJK0023","AYM00089606","USR0000ABAN")
+vcVariables = c('TMIN','TMAX','SNWD','SNOW','PRCP','EVAP')
+cMainStation = c('USR0000ABAN')
+cWaterfallStation = 'CA005012961'
+
+if ( F ) {
+dt2014 = fread('/home/ask/Work2/Others/2014.csv', verbose = F, showProgress = F)
+dt2014[, c('V5','V6','V7','V8') := NULL]
+setnames(dt2014, c('ID','Date','Variable','Value'))
+dt2014 = dt2014[Variable %in% vcVariables]
+dt2014 = dt2014[ID %in% vcStations]
+
+dt2015 = fread('/home/ask/Work2/Others/2015.csv', verbose = F, showProgress = F)
+dt2015[, c('V5','V6','V7','V8') := NULL]
+setnames(dt2015, c('ID','Date','Variable','Value'))
+dt2015 = dt2015[Variable %in% vcVariables]
+dt2015 = dt2015[ID %in% vcStations]
+
+dtClimate = rbind(dt2014, dt2015)
+rm(dt2014)
+rm(dt2015)
+gc()
+
+setDT(dtClimate)
+dtClimate[, Value := as.numeric(Value)]
+dtClimate[, Date := as.POSIXct(as.character(Date), format = '%Y%m%d', origin = '1960-01-01', tz = "GMT")]
+# dtClimate[Variable %in% c('TMIN','TMAX','PRCP'), Value := Value / 10]
+
+setkey(dtClimate, ID, Variable, Date)
+dtClimate[, CumValue := cumsum(Value), list(ID,Variable)]
+}
+
+```
+
+*We've been working on ways to visualise time series data lately. The results looked fun and interesting so we decided to give you guys a peek.* 
+
+*Psst. Free open-source stuff ahead.*
+
+## Time Series Data
+
+Any data which has some temporal identity can be considered time series data. 
+
+Your internet data consumption every month, tracked over multiple months, would comprise time series data. If you record the distance your car has been driven every week over a long duration then you are creating time series data. Flagging every instance that you used the phrase, 'So what else is up?' on a phone call would also make time series data. Time series data, actually, is all around.
+
+## Data from IoT
+
+The internet of things promises to improve our lives by connecting sensors in the objects that surround us - buildings, appliances, gadgets, and vehicles. Most of the data generated from IoT devices is going to be time series data too. The farthest-reaching impact of IoT lies in our ability to record and analyse this data to provide additional services. 
+
+## The Legacy of Line Charts
+
+The first step in analysing data is usually visualising it to glean some simple insights.
+
+Legacy portrayals of time series data would be based on line charts, which have been around since the early 1700s (source: Wikipedia). They facilitate trend detection and comparison, are simple to draw, and easy to understand; all in all a very well behaved visualisation. In modern times, their use is widespread from the heartbeat monitor at a hospital to the multiple-monitor display at a trader's desk.
+
+We all remember these days [1] -
+
+```{r excel97_line, ext = 'png', fig.align = 'center', echo = FALSE, message = F, warning = F}
+
+Excel97Plot = ggplot(dtClimate[Variable %in% 'TMAX' & ID %in% vcStations[1:4]], aes(x = Date, y = Value, color = ID)) +
+   geom_line() +
+   geom_point() +
+   theme_excel() + 
+   scale_colour_excel() +
+   theme(legend.position = 'none')
+
+plot(Excel97Plot)
+```
+
+## Alternatives to Line Charts
+
+However there are cases when the data scientist becomes more demanding and specific. Five alternatives available to such a data scientist are listed below. We are a smart and connected technology company ( hence the mandatory IoT section above ), and we're also a clean energy company so we decided to use meteorological data from random weather stations somewhere in the USA to make some examples.[2]
+
+```{r minimalTheme, echo = FALSE, message = F, warning = F, results = 'hide'}
+minimalTheme = theme_set(theme_bw(12))
+minmalTheme = theme_update(
+   axis.ticks = element_blank(),
+   # legend.position = 'none',
+   strip.background = element_blank(), 
+   panel.border = element_blank(), 
+   panel.background = element_blank(), 
+   panel.grid = element_blank(), 
+   panel.border = element_blank()
+)
+
+```
+
+### 1. Calendar Heatmap
+
+A calendar heatmap is a great way to visualise daily data over one or more years. The smallest box is a day, the thicker borders demarcate months, and a year forms one entire box. Its structure makes it easy to detect weekly, monthly, or seasonal patterns. A line chart might also point to a trend but because there is no context of a month or a week in a regular line chart, the viewer usually needs to do some further analysis to arrive at that conclusion.
+
+The below chart plots the daily maximum temperature recorded over two years. Can you make out the summer months from winter? Does 2015 look warmer than 2014? Do weekends in the early part of the year look slightly warmer than the weekdays? When would you say the onset of winter usually happens? Can you make out the brief periods of respite from the heat in the summers?
+
+```{r calendar_heatmap_continuous, fig.align = 'center', echo = FALSE, message = F, warning = F, fig.height = 4, fig.width = 10}
+p1 = ggplot_calendar_heatmap(
+   dtClimate[
+      ID %in% cMainStation
+   ][
+      Variable %in% 'TMAX'
+   ][,
+      Value := Value / 10
+   ],
+   'Date',
+   'Value'
+)
+
+# adding some formatting
+p1 + 
+   xlab(NULL) + 
+   ylab(NULL) + 
+   scale_fill_continuous(low = '#0000FF', high = '#FFFF00') +
+   ggtitle("Daily Maximum Temperature") +
+   facet_grid(Year~.) +
+   theme(legend.position = 'bottom')
+
+```
+
+At Ather, a calendar heatmap of the usage of our public charging facilities will help us understand the consumption pattern. This information will serve as useful input into our capacity planning for the future to ensure maximum availability and accessibility of the charging infrastructure.
+
+### 2. Horizon Plots
+
+Imagine an area chart which has been chopped into multiple chunks of equal height. If you overlay these chunks one on top of the the other, and colour them to indicate which chunk it is, you get a horizon plot. Horizon plots are useful when vertical space is constrained, when visualising y values spanning a vast range but with a skewed distribution, or trying to highlight outliers without losing context of variation in the rest of the data.
+
+The below chart plots the daily maximum temperature recorded over two years. Can you spot the hottest day? The coldest day? Which of the questions posed against the previous chart are you able to answer?
+
+```{r horizon, fig.align = 'center', echo = FALSE, message = F, warning = F, fig.height = 4}
+
+# base plot
+p1 = ggplot(dtClimate[
+      ID %in% cMainStation
+   ][
+      Variable == 'TMAX'
+   ][, 
+      Year := strftime(Date, '%Y')
+   ][, 
+      Value := Value / 10
+   ], 
+   aes(
+      x = Date, 
+      y = Value, 
+      fill = Value
+   )
+) +
+   stat_horizon(bandwidth = 10) +
+   facet_wrap(~Year, scales = 'free_x', ncol = 1) +
+   theme(legend.position = 'bottom')
+
+# adding some formatting
+p1 + 
+   xlab('Max Temp') + 
+   ylab(NULL) + 
+   scale_fill_continuous(low = 'green', high = 'red') 
+```
+
+A horizon plot of the accceleration would be a great way to visualise the data when we are analysing driver behaviour. The instances when the rider went full throttle or braked sharply would result in high values of acceleration and deceleration which would be easily recognisable against a backdrop of mostly moderate acceleration / deceleration. The backdrop can also be perceived with clarity which would help us know how steady the rider usually is.
+
+### 3. Steamgraphs
+
+A steamgraph is a more aesthetically appealing version of a stacked area chart. It tries to highlight the changes in the data by placing the groups with the most variance on the edges, and the groups with the least variance towards the centre. This feature, in conjunction with the centred alignment of each of the individual parts, makes it easier for the viewer to compare the contribution of the individual components across time.
+
+Here is a plot of cumulative snowfall over one year for a bunch of weather stations. Can you spot the sudden increase in snowfall in January? Can you make out which weather station contributed the highest to this jump? When does the snowfall usually cease for the year?
+
+```{r steamgraph, fig.align = 'center', echo = FALSE, message = F, warning = F, fig.height = 4}
+
+# base plot
+# the data looks created because we need to ensure the completeness of data
+p1 = ggplot(
+   merge(
+      setnames(
+         setDT(
+            dtClimate[
+               ID %in% c("USC00456898", "US1COGN0018", "USC00051660", "USC00420072", "CA00117CA90", "CA001108906", "US1COJK0023") &
+               Date >= as.POSIXct('20140701', format = '%Y%m%d', origin = '1960-01-01', tz = "GMT") &
+               Date < as.POSIXct('20150701', format = '%Y%m%d', origin = '1960-01-01', tz = "GMT"), 
+               expand.grid(unique(ID), unique(Date))
+            ]
+         ), 
+         c('ID','Date')
+      ),
+      dtClimate[Variable %in% 'SNOW'],
+      c('ID','Date'),
+      all.x= T
+   )[, 
+      CumValue := CumValue - min(CumValue, na.rm = T), 
+      list(ID)
+   ][, 
+      CumValue := na.locf(CumValue), 
+      list(ID)
+   ], 
+      aes(
+         x = Date, 
+         y = CumValue, 
+         group = ID, 
+         fill = ID
+      )
+   ) +
+   stat_steamgraph()
+
+# adding some formatting
+p1 + 
+   xlab(NULL) + 
+   ylab(NULL)
+
+```
+
+A steamgraph would be a nice way to tell the primary user about how the usage has been split between multiple riders who use the same scooter.
+
+### 4. Waterfall
+In some cases, instead of the values itself, you might want to see the changes in the values. Instead of plotting the coordinates, we plot rectangles which stretch between sucessive coordinate. The height of the rectangle signifies the changes in the value, the width signifies the change in time, and the top signifies the final value attained. The reds and greens signify the drops and rises respectively on that particular day. You can also make out the contour of the overall trend. 
+
+Here is a plot of the depth of snow for a random weather station. Can you spot the day the highest increase was recorded? The week with the highest fall?
+
+```{r waterfall, fig.align = 'center', echo = FALSE, message = F, warning = F}
+
+# base plot
+p1 = ggplot(
+   dtClimate[
+      Variable %in% c('SNWD') & 
+      ID %in% cWaterfallStation &
+      Date >= as.POSIXct('20141001', format = '%Y%m%d', origin = '1960-01-01', tz = "GMT") &
+      Date < as.POSIXct('20150401', format = '%Y%m%d', origin = '1960-01-01', tz = "GMT")
+   ]) + 
+   stat_waterfall(
+      aes(
+         x = Date,
+         y = Value
+      )
+   )
+
+
+# adding some formatting
+p1 + 
+   xlab(NULL) + 
+   ylab(NULL)
+```
+
+Battery consumption across the ride could be portrayed as a waterfall plot over time or distance. We will be able to better understand how our battery depletes over a ride and might even be able to recognise stretches of particular driving behaviour.
+
+### 5. Occurrence Dot Plot
+
+In infographics, this one is a favourite alternative to bar charts. For rare events, the reader would find it convenient to have the count of events encoded in the chart itself instead of having to map the value back to the Y axis.
+
+We've slightly abused this one by plotting the amount precipation instead of discrete events. In our defense, there aren't too many things that happen in meteorological data.
+
+```{r occurrence_dotplot, fig.align = 'center', echo = FALSE, message = F, warning = F, fig.height = 0.7}
+# base plot
+p1 = ggplot(
+   dtClimate[
+      ID %in% 'USC00051660' & 
+      Variable %in% 'PRCP'  &
+      Date >= as.POSIXct('20140401', format = '%Y%m%d', origin = '1960-01-01', tz = "GMT") &
+      Date < as.POSIXct('20150401', format = '%Y%m%d', origin = '1960-01-01', tz = "GMT")
+   ], 
+   aes(
+      x = Date, 
+      y = Value/100)
+   ) +
+   stat_occurrence()
+
+# adding some formatting   
+p1 +
+   xlab(NULL) + 
+   ylab(NULL) +
+   ylim(
+      range(
+         dtClimate[
+            ID %in% 'USC00051660' & 
+            Variable %in% 'PRCP',
+            Value/100
+         ]
+      ) +
+         c(-1,1)
+   ) +
+   theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
+
+```
+
+We also detect events across your rides which would include the aforemention hard accelerations and decelerations amongst others. Once we have detected all the events of interest, a dot plot marking out the occurrence of the events across time or distance would be an interesting break down of the ride for a rider.
+
+## Tell Us What You Think!
+
+Do you know any other interesting ways to visualise time series data? Any feedback or suggestions? Please leave a comment!
+
+## ggTimeSeries
+
+R users, we've open sourced the code and you can create these plots yourself! Check out the ( under development but works for the most part ) [ggTimeSeries](https://github.com/Ather-Energy/ggTimeSeries) package.
+
+## Attributions
+[1] Plot created in R using the ggplot2 and ggthemes packages
+
+[2] Data downloaded from ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/by_year/
+
+Menne, M.J., I. Durre, B. Korzeniewski, S. McNeal, K. Thomas, X. Yin, S. Anthony, R. Ray, R.S. Vose, B.E.Gleason, and T.G. Houston, 2012: Global Historical Climatology Network - Daily (GHCN-Daily), Version 3.12
