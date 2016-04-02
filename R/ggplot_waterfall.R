@@ -86,7 +86,7 @@ ggplot_waterfall = function(
             color = 'Change'
          )
       ) +
-      scale_color_manual(breaks = c('+','-',''), values = c("black", "green", "red"))
+      scale_color_manual(breaks = c('+','-',''), values = c("green", "red","black"))
 
    ggplotWaterfall
 
