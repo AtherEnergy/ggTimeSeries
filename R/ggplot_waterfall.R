@@ -54,7 +54,7 @@ ggplot_waterfall = function(
    vcGroupingColumnNames = NULL
 ) {
 
-   setDT(dtData)
+   dtData = copy(data.table(dtData))
 
    dtData[,
       NextY := c(tail(get(cYColumnName), -1), NA),

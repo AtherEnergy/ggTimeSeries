@@ -70,7 +70,7 @@ ggplot_calendar_heatmap = function(
    vcGroupingColumnNames = 'Year'
 ) {
 
-   setDT(dtDateValue)
+   dtDateValue = copy(data.table(dtDateValue))
    dtDateValue[, Year := as.integer(strftime(get(cDateColumnName), '%Y'))]
    vcGroupingColumnNames = unique(c(vcGroupingColumnNames, 'Year'))
 

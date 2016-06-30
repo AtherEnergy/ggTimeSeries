@@ -59,7 +59,7 @@ ggplot_horizon = function(
    vcGroupingColumnNames = NULL
 ) {
 
-   setDT(dtData)
+   dtData = copy(data.table(dtData))
    setkeyv(dtData, cXColumnName)
 
    # calculating a default bandwidth
