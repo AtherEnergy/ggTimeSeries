@@ -229,3 +229,41 @@ p1 +
    ylab(NULL) + 
    coord_fixed(ylim = c(0,1 + max(dfData$y)))
 ```
+
+### Marimekko or Mosaik
+Available as `stat_marimekko`.
+
+A marimekko plot, or a mosaic plot, visualises the co-occurrence of two 
+categorical / ordinal variables. In case of a time series, it could be used to
+visualise the proportion of transitions from one state to another by considering
+each state to be a category and plotting the occurrence of current category 
+vs. next category. The span on the horizontal represents the overall 
+occurrence of the xbucket argument. The span on the vertical represents the 
+marginal occurrence of the ybucket argument when xbucket was the previous state.
+The area of a block indicates the proportion of occurrence of that pair in the 
+entire dataset.
+
+
+```{r marimekko, fig.align = 'center', echo = TRUE, message = F, warning = F}
+# creating some data
+set.seed(1)
+
+dfData = data.frame(Signal = pmax(pmin(rnorm(10000), 3), -3))
+
+dfData2 = data.frame(
+   Signal = round(head(dfData$Signal, -1),0),
+   NextSignal = round(tail(dfData$Signal, -1),0),
+   Weight = 1
+)
+
+# base plot
+p1 = ggplot(dfData2, aes(xbucket = Signal, ybucket = NextSignal, fill = NextSignal, weight = Weight) )+
+   stat_marimekko(color = 'black', xlabelyposition = -0.1)
+
+# adding some formatting   
+p1 +
+   xlab('Signal occurrence %') + 
+   ylab('Signal | Next signal occurrence %') +
+   scale_x_continuous(breaks = 0:10/10) +
+   scale_y_continuous(breaks = 0:10/10)
+```

@@ -18,6 +18,10 @@ plots are best viewed in an apsect ratio of very low vertical length.
 is required for ggplot to assign a colour / fill scale.
 }
 
+\section{Other parameters}{
+ bandwidth, to dictate the span of a band.
+}
+
 \section{Cosmetic Tips}{
  The minimalist look can be achieved by appending the
 following chunk of code to the output object:

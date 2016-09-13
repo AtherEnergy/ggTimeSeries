@@ -23,7 +23,7 @@ to the multiple-monitor display at a trader's desk.
 
     ## [1] "Excel 97 look recreated in R with the ggthemes package"
 
-<img src="README_files/figure-markdown_strict/excel97_line-1.png" title="" alt="" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_strict/excel97_line-1.png" style="display: block; margin: auto;" />
 
 Alternatives
 ------------
@@ -80,7 +80,7 @@ makes it easy to detect weekly, monthly, or seasonal patterns.
        scale_fill_continuous(low = 'green', high = 'red') + 
        facet_wrap(~Year, ncol = 1)
 
-<img src="README_files/figure-markdown_strict/calendar_heatmap-1.png" title="" alt="" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_strict/calendar_heatmap-1.png" style="display: block; margin: auto;" />
 
     # creating some categorical data
     dtData[, CategCol := letters[1 + round(ValueCol * 7)]]
@@ -98,7 +98,7 @@ makes it easy to detect weekly, monthly, or seasonal patterns.
        ylab(NULL) + 
        facet_wrap(~Year, ncol = 1)
 
-<img src="README_files/figure-markdown_strict/calendar_heatmap-2.png" title="" alt="" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_strict/calendar_heatmap-2.png" style="display: block; margin: auto;" />
 
 ### Horizon Plots
 
@@ -130,7 +130,7 @@ without losing context of variation in the rest of the data.
        scale_fill_continuous(low = 'green', high = 'red') + 
        coord_fixed( 0.5 * diff(range(dfData$x)) / diff(range(dfData$y)))
 
-<img src="README_files/figure-markdown_strict/horizon-1.png" title="" alt="" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_strict/horizon-1.png" style="display: block; margin: auto;" />
 
 ### Steamgraphs
 
@@ -170,7 +170,7 @@ time.
        ylab(NULL) + 
        coord_fixed( 0.2 * diff(range(dfData$Time)) / diff(range(dfData$Signal)))
 
-<img src="README_files/figure-markdown_strict/steamgraph-1.png" title="" alt="" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_strict/steamgraph-1.png" style="display: block; margin: auto;" />
 
 ### Waterfall
 
@@ -195,7 +195,7 @@ changes in the values.
        xlab(NULL) + 
        ylab(NULL)
 
-<img src="README_files/figure-markdown_strict/waterfall-1.png" title="" alt="" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_strict/waterfall-1.png" style="display: block; margin: auto;" />
 
 ### Occurrence Dot Plot
 
@@ -219,4 +219,43 @@ chart itself instead of having to map the value back to the Y axis.
        ylab(NULL) + 
        coord_fixed(ylim = c(0,1 + max(dfData$y)))
 
-<img src="README_files/figure-markdown_strict/occurrence_dotplot-1.png" title="" alt="" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_strict/occurrence_dotplot-1.png" style="display: block; margin: auto;" />
+
+### Marimekko or Mosaik
+
+Available as `stat_marimekko`.
+
+A marimekko plot, or a mosaic plot, visualises the co-occurrence of two
+categorical / ordinal variables. In case of a time series, it could be
+used to visualise the proportion of transitions from one state to
+another by considering each state to be a category and plotting the
+occurrence of current category vs. next category. The span on the
+horizontal represents the overall occurrence of the xbucket argument.
+The span on the vertical represents the marginal occurrence of the
+ybucket argument when xbucket was the previous state. The area of a
+block indicates the proportion of occurrence of that pair in the entire
+dataset.
+
+    # creating some data
+    set.seed(1)
+
+    dfData = data.frame(Signal = pmax(pmin(rnorm(10000), 3), -3))
+
+    dfData2 = data.frame(
+       Signal = round(head(dfData$Signal, -1),0),
+       NextSignal = round(tail(dfData$Signal, -1),0),
+       Weight = 1
+    )
+
+    # base plot
+    p1 = ggplot(dfData2, aes(xbucket = Signal, ybucket = NextSignal, fill = NextSignal, weight = Weight) )+
+       stat_marimekko(color = 'black', xlabelyposition = -0.1)
+
+    # adding some formatting   
+    p1 +
+       xlab('Signal occurrence %') + 
+       ylab('Signal | Next signal occurrence %') +
+       scale_x_continuous(breaks = 0:10/10) +
+       scale_y_continuous(breaks = 0:10/10)
+
+<img src="README_files/figure-markdown_strict/marimekko-1.png" style="display: block; margin: auto;" />
