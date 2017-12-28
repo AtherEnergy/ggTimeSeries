@@ -14,6 +14,11 @@
 #' for the chart to operate within If you plan to facet your plot,
 #' you should specify the same column names to this argument. The function
 #' will automatically add the veriable for the year to the facet.
+#' @param dayBorderSize Size of the border around each day
+#' @param dayBorderColour Colour of the border around each day
+#' @param monthBorderSize Size of the border around each month
+#' @param monthBorderColour Colour of the border around each month
+#' @param monthBorderLineEnd Line end for the border around each month
 #' @section Cosmetic Tips: The minimalist look can be achieved by appending the
 #' following chunk of code to the output object:
 #' \code{ \cr
@@ -67,7 +72,12 @@ ggplot_calendar_heatmap = function(
    dtDateValue,
    cDateColumnName = '',
    cValueColumnName = '',
-   vcGroupingColumnNames = 'Year'
+   vcGroupingColumnNames = 'Year',
+   dayBorderSize = 0.25,
+   dayBorderColour = "black",
+   monthBorderSize = 2,
+   monthBorderColour = "black",
+   monthBorderLineEnd = "round"
 ) {
 
    dtDateValue = copy(data.table(dtDateValue))
@@ -117,7 +127,7 @@ ggplot_calendar_heatmap = function(
          aes_string(
             fill = cValueColumnName
          ),
-         color = 'black'
+         color = dayBorderColour, size = dayBorderSize
       ) +
       coord_fixed() +
       xlab('Month') +
@@ -145,7 +155,7 @@ ggplot_calendar_heatmap = function(
                y = DayOfWeek - 0.5,
                yend = DayOfWeek + 0.5
             ),
-            size = 2
+            size = monthBorderSize, colour = monthBorderColour, lineend = monthBorderLineEnd
          )
    }
 
@@ -169,7 +179,7 @@ ggplot_calendar_heatmap = function(
                y = DayOfWeek,
                yend = DayOfWeek
             ),
-            size = 2
+            size = monthBorderSize, colour = monthBorderColour, lineend = monthBorderLineEnd
          )
    }
 
