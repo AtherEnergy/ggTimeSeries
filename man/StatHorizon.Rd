@@ -12,4 +12,3 @@ StatHorizon
 Transforms data for a horizon plot
 }
 \keyword{datasets}
-

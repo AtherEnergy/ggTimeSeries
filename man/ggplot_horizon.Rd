@@ -60,6 +60,7 @@ coord_fixed( 0.5 * diff(range(dfData$x)) / diff(range(dfData$y)))\cr
  \code{\link{stat_horizon}}, a less polished but more
 flexible alternative.
 }
+
 \examples{
 set.seed(1)
 dfData = data.frame(x = 1:1000, y = cumsum(rnorm(1000)))
@@ -70,4 +71,3 @@ p1 +
 geom_text(label = '!!!') +
 scale_colour_continuous(low = 'red', high = 'green')
 }
-

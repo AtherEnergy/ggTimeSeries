@@ -39,6 +39,7 @@ theme( \cr
 coord_fixed( 0.2 * diff(range(df$Time)) / diff(range(df$Signal))) \cr
 }
 }
+
 \examples{
 set.seed(10)
 df = data.frame(
@@ -51,4 +52,3 @@ df = data.frame(
 ggplot(df, aes(x = Time, y = Signal, group = Variable, fill = VariableLabel)) +
   stat_steamgraph()
 }
-

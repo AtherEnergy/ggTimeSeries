@@ -12,4 +12,3 @@ StatCalendarTiles
 Transforms data for the tiles of the heatmap
 }
 \keyword{datasets}
-

@@ -40,6 +40,7 @@ theme( \cr
 ) \cr
 }
 }
+
 \examples{
 ggplot(
    data.frame(
@@ -59,4 +60,3 @@ ggplot(
       color = 'black'
    )
 }
-

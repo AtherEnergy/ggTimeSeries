@@ -12,4 +12,3 @@ StatSteamgraph
 Transforms data for a steam graph
 }
 \keyword{datasets}
-

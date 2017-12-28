@@ -49,6 +49,7 @@ theme( \cr
  \code{\link{ggplot_horizon}}, a more polished but less
 flexible alternative.
 }
+
 \examples{
 ggplot(data.frame(x = 1:89, y = as.numeric(unlist(austres))), aes(x =x, y = y, fill = y) )+
    stat_horizon() +
@@ -59,4 +60,3 @@ ggplot(data.frame(x = 1:1000, y = cumsum(rnorm(1000))), aes(x =x, y = y, fill = 
    stat_horizon() +
    scale_fill_continuous(low = 'white', high = 'red')
 }
-

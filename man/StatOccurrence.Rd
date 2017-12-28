@@ -12,4 +12,3 @@ StatOccurrence
 Transforms data for an occurrence plot
 }
 \keyword{datasets}
-

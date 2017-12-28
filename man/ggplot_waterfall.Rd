@@ -56,6 +56,7 @@ theme( \cr
  \code{\link{stat_waterfall}}, a
 flexible but less polished alternative.
 }
+
 \examples{
 set.seed(1)
 dfData = data.frame(x = 1:100, y = cumsum(rnorm(100)))
@@ -65,4 +66,3 @@ ggplot_waterfall(
    'y'
 )
 }
-
