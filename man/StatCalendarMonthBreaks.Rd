@@ -12,4 +12,3 @@ StatCalendarMonthBreaks
 Transforms data for the month breaks of the calendar heatmap
 }
 \keyword{datasets}
-

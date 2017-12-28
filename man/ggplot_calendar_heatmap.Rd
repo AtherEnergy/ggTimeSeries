@@ -5,7 +5,9 @@
 \title{Plots a calendar heatmap}
 \usage{
 ggplot_calendar_heatmap(dtDateValue, cDateColumnName = "",
-  cValueColumnName = "", vcGroupingColumnNames = "Year")
+  cValueColumnName = "", vcGroupingColumnNames = "Year",
+  dayBorderSize = 0.25, dayBorderColour = "black", monthBorderSize = 2,
+  monthBorderColour = "black", monthBorderLineEnd = "round")
 }
 \arguments{
 \item{dtDateValue}{Data set which may include other columns apart from date
@@ -19,6 +21,16 @@ and values.}
 for the chart to operate within If you plan to facet your plot,
 you should specify the same column names to this argument. The function
 will automatically add the veriable for the year to the facet.}
+
+\item{dayBorderSize}{Size of the border around each day}
+
+\item{dayBorderColour}{Colour of the border around each day}
+
+\item{monthBorderSize}{Size of the border around each month}
+
+\item{monthBorderColour}{Colour of the border around each month}
+
+\item{monthBorderLineEnd}{Line end for the border around each month}
 }
 \value{
 Returns a gpplot friendly object which means the user can use
@@ -57,6 +69,7 @@ theme( \cr
  \code{\link{stat_calendar_heatmap}}, a
 flexible but less polished alternative.
 }
+
 \examples{
 set.seed(1)
 dtData = data.table(
@@ -80,4 +93,3 @@ p1 +
 geom_text(label = '!!!') +
 scale_colour_continuous(low = 'red', high = 'green')
 }
-

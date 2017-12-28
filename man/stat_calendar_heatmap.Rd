@@ -53,6 +53,7 @@ theme( \cr
  \code{\link{ggplot_calendar_heatmap}}, a
 polished but less flexible alternative.
 }
+
 \examples{
 DailyData = data.frame(
       DateCol = seq(
@@ -73,4 +74,3 @@ ggplot(
    stat_calendar_heatmap() +
    facet_wrap(~Year, ncol = 1)
 }
-

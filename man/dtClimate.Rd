@@ -19,4 +19,3 @@ data(dtClimate)
 The climate data used in the blogpost.
 }
 \keyword{datasets}
-

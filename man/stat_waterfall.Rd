@@ -40,10 +40,10 @@ theme( \cr
  \code{\link{ggplot_waterfall}}, a
 flexible but less polished alternative.
 }
+
 \examples{
 set.seed(1)
 dfData = data.frame(x = 1:20, y = cumsum(rnorm(20)))
 ggplot(dfData, aes(x =x, y = y) )+
    stat_waterfall()
 }
-

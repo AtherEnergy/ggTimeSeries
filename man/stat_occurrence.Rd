@@ -38,6 +38,7 @@ following chunk of code to the output object:
 \code{\link{ggplot2::coord_fixed()}} can provide a balance to the aspect
 ratio of the chart.
 }
+
 \examples{
 set.seed(1)
 dfData = data.table(x = 1:100, y = floor(4 * abs(rnorm(100, 0 , 0.4))))
@@ -45,4 +46,3 @@ ggplot(dfData, aes(x =x, y = y) )+
    stat_occurrence() +
    coord_fixed()
 }
-
