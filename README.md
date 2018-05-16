@@ -42,8 +42,7 @@ Before that, setting a minimal theme -
        strip.background = element_blank(), 
        panel.border = element_blank(), 
        panel.background = element_blank(), 
-       panel.grid = element_blank(), 
-       panel.border = element_blank()
+       panel.grid = element_blank()
     )
 
 ### Calendar Heatmap
