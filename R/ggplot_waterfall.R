@@ -13,23 +13,23 @@
 #' you should specify the same column names to this argument.
 #' @section Cosmetic Tips: The minimalist look can be achieved by appending the
 #' following chunk of code to the output object:
-#' \code{ \cr
-#' + \cr
-#' xlab(NULL) + \cr
-#' ylab(NULL) + \cr
-#' scale_fill_continuous(low = 'green', high = 'red') + \cr
-#' theme( \cr
-#'    axis.text = element_blank(), \cr
-#'    axis.ticks = element_blank(), \cr
-#'    legend.position = 'none', \cr
-#'    strip.background = element_blank(), \cr
-#'    # strip.text = element_blank(), # useful if only one year of data \cr
-#'    plot.background = element_blank(), \cr
-#'    panel.background = element_blank(), \cr
-#'    panel.border = element_blank(), \cr
-#'    panel.grid = element_blank(), \cr
-#'    panel.border = element_blank() \cr
-#' ) \cr
+#' \code{
+#' +
+#' xlab(NULL) +
+#' ylab(NULL) +
+#' scale_fill_continuous(low = 'green', high = 'red') +
+#' theme(
+#'    axis.text = element_blank(),
+#'    axis.ticks = element_blank(),
+#'    legend.position = 'none',
+#'    strip.background = element_blank(),
+#'    # strip.text = element_blank(), # useful if only one year of data
+#'    plot.background = element_blank(),
+#'    panel.background = element_blank(),
+#'    panel.border = element_blank(),
+#'    panel.grid = element_blank(),
+#'    panel.border = element_blank()
+#' )
 #' }
 #' @section Also See: \code{\link{stat_waterfall}}, a
 #' flexible but less polished alternative.
@@ -38,56 +38,58 @@
 #' @import data.table
 #' @import ggplot2
 #' @export
-#' @examples
+#' @examples {
+#' library(ggplot2)
 #' set.seed(1)
 #' dfData = data.frame(x = 1:100, y = cumsum(rnorm(100)))
 #' ggplot_waterfall(
 #'    dtData = dfData,
 #'    'x',
 #'    'y'
-#' )
-ggplot_waterfall = function(
-   dtData,
-   cXColumnName,
-   cYColumnName,
-   nArrowSize = 0.25,
-   vcGroupingColumnNames = NULL
-) {
+#' )}
+ggplot_waterfall <- function(dtData,
+                             cXColumnName,
+                             cYColumnName,
+                             nArrowSize = 0.25,
+                             vcGroupingColumnNames = NULL) {
+  NextY <- ""
+  tail <- ""
+  Change <- ""
 
-   dtData = copy(data.table(dtData))
+  dtData <- copy(data.table(dtData))
 
-   dtData[,
-      NextY := c(tail(get(cYColumnName), -1), NA),
-      unique(vcGroupingColumnNames)
-   ]
+  dtData[
+    ,
+    NextY := c(tail(get(cYColumnName), -1), NA),
+    unique(vcGroupingColumnNames)
+  ]
 
-   dtData[, Change := '+']
-   dtData[NextY > get(cYColumnName), Change := '-']
-   dtData[NextY == get(cYColumnName), Change := '']
-   ggplotWaterfall = ggplot() +
-      geom_segment(
-         data = dtData[get(cYColumnName) != NextY],
-         aes_string(
-            x = cXColumnName,
-            y = cYColumnName,
-            xend = cXColumnName,
-            yend = 'NextY',
-            color = 'Change'
-         ),
-         arrow = arrow(
-            length = unit(nArrowSize,"cm")
-         )
-      ) +
-      geom_point(
-         data = dtData[get(cYColumnName) == NextY],
-         aes_string(
-            x = cXColumnName,
-            y = cYColumnName,
-            color = 'Change'
-         )
-      ) +
-      scale_color_manual(breaks = c('+','-',''), values = c("green", "red","black"))
-
-   ggplotWaterfall
-
+  dtData[, Change := "+"]
+  dtData[NextY > get(cYColumnName), Change := "-"]
+  dtData[NextY == get(cYColumnName), Change := ""]
+  ggplotWaterfall <- ggplot() +
+    geom_segment(
+      data = dtData[get(cYColumnName) != NextY],
+      aes_string(
+        x = cXColumnName,
+        y = cYColumnName,
+        xend = cXColumnName,
+        yend = "NextY",
+        color = "Change"
+      ),
+      arrow = arrow(length = unit(nArrowSize, "cm"))
+    ) +
+    geom_point(
+      data = dtData[get(cYColumnName) == NextY],
+      aes_string(
+        x = cXColumnName,
+        y = cYColumnName,
+        color = "Change"
+      )
+    ) +
+    scale_color_manual(
+      breaks = c("+", "-", ""),
+      values = c("green", "red", "black")
+    )
+  ggplotWaterfall
 }

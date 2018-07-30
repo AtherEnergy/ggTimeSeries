@@ -4,7 +4,7 @@
 \name{StatHorizon}
 \alias{StatHorizon}
 \title{Transforms data for a horizon plot}
-\format{An object of class \code{StatHorizon} (inherits from \code{Stat}, \code{ggproto}) of length 4.}
+\format{An object of class \code{StatHorizon} (inherits from \code{Stat}, \code{ggproto}, \code{gg}) of length 4.}
 \usage{
 StatHorizon
 }

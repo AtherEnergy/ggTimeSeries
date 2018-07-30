@@ -1,9 +1,24 @@
 ---
-output:
-   md_document:
-    fig_width: 8
+title: "ggTimeSeries"
+author: "Aditya Kothari"
+date: "`r Sys.Date()`"
+output: 
+   rmarkdown::html_vignette:
+    fig_width: 6
     fig_height: 3
+vignette: >
+  %\VignetteIndexEntry{Introduction to ggTimeSeries}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
 
 ```{r initialisation, echo = FALSE, message = F, warning = F}
 library(ggthemes)
@@ -12,7 +27,7 @@ library(data.table)
 library(ggTimeSeries)
 ```
 
-# ggTimeSeries
+## About
 This R package offers novel time series visualisations. It is based on `ggplot2` and offers `geom`s and pre-packaged functions for easily creating any of the offered charts. Some examples are listed below.
 
 This package can be installed from github by installing `devtools` library and then running the following command - `devtools::install_github('Ather-Energy/ggTimeSeries')`.

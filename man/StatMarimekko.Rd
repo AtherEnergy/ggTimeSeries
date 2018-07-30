@@ -4,7 +4,7 @@
 \name{StatMarimekko}
 \alias{StatMarimekko}
 \title{Transforms data for the tiles of the heatmap}
-\format{An object of class \code{StatMarimekko} (inherits from \code{Stat}, \code{ggproto}) of length 4.}
+\format{An object of class \code{StatMarimekko} (inherits from \code{Stat}, \code{ggproto}, \code{gg}) of length 4.}
 \usage{
 StatMarimekko
 }

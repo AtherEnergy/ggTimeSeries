@@ -8,6 +8,9 @@ ggplot_horizon(dtData, cXColumnName, cYColumnName, bandwidth = NULL,
   vcGroupingColumnNames = NULL)
 }
 \arguments{
+\item{dtData}{Data set which may include other columns apart from date
+and values.}
+
 \item{cXColumnName}{Column name of dates.}
 
 \item{cYColumnName}{Column name of values.}
@@ -18,9 +21,6 @@ easier to differentiate between the bands.}
 \item{vcGroupingColumnNames}{The set of columns which together define the group
 for the chart to operate within If you plan to facet your plot,
 you should specify the same column names to this argument.}
-
-\item{dtDateValue}{Data set which may include other columns apart from date
-and values.}
 }
 \value{
 Returns a gpplot friendly object which means the user can use
@@ -29,30 +29,30 @@ ggplot scales, etc. to modify the look.
 \description{
 A horizon plot breaks the Y dimension down using colours. This is useful
 when visualising y values spanning a vast range and / or trying to highlight
-outliers without losing context of the rest of the data.\cr \cr Horizon
+outliers without losing context of the rest of the data.  Horizon
 plots are best viewed in an apsect ratio of very low vertical length.
 }
 \section{Cosmetic Tips}{
  The minimalist look can be achieved by appending the
 following chunk of code to the example output object:
-\code{ \cr
-+ \cr
-xlab(NULL) + \cr
-ylab(NULL) + \cr
-scale_fill_continuous(low = 'green', high = 'red') + \cr
-theme( \cr
-   axis.text = element_blank(), \cr
-   axis.ticks = element_blank(), \cr
-   legend.position = 'none', \cr
-   strip.background = element_blank(), \cr
-   # strip.text = element_blank(), # useful if only one year of data \cr
-   plot.background = element_blank(), \cr
-   panel.border = element_blank(), \cr
-   panel.background  = element_blank(), \cr
-   panel.grid = element_blank(), \cr
-   panel.border = element_blank() \cr
+\code{
++
+xlab(NULL) +
+ylab(NULL) +
+scale_fill_continuous(low = 'green', high = 'red') +
+theme(
+   axis.text = element_blank(),
+   axis.ticks = element_blank(),
+   legend.position = 'none',
+   strip.background = element_blank(),
+   # strip.text = element_blank(), # useful if only one year of data
+   plot.background = element_blank(),
+   panel.border = element_blank(),
+   panel.background  = element_blank(),
+   panel.grid = element_blank(),
+   panel.border = element_blank()
 ) +
-coord_fixed( 0.5 * diff(range(dfData$x)) / diff(range(dfData$y)))\cr
+coord_fixed( 0.5 * diff(range(dfData$x)) / diff(range(dfData$y)))
 }
 }
 
@@ -62,6 +62,8 @@ flexible alternative.
 }
 
 \examples{
+{
+library(ggplot2)
 set.seed(1)
 dfData = data.frame(x = 1:1000, y = cumsum(rnorm(1000)))
 p1 = ggplot_horizon(dfData, 'x', 'y')
@@ -70,4 +72,5 @@ p1
 p1 +
 geom_text(label = '!!!') +
 scale_colour_continuous(low = 'red', high = 'green')
+}
 }

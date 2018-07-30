@@ -7,6 +7,21 @@
 stat_calendar_heatmap(mapping = NULL, data = NULL, show.legend = NA,
   inherit.aes = TRUE, na.rm = T, bandwidth = NULL, ...)
 }
+\arguments{
+\item{mapping}{mapping}
+
+\item{data}{df}
+
+\item{show.legend}{logical}
+
+\item{inherit.aes}{logical}
+
+\item{na.rm}{logical}
+
+\item{bandwidth}{bandwidth}
+
+\item{...}{more functions}
+}
 \description{
 A calendar heatmap provides context for weeks, and day of week and
 is a better way to visualise daily data than line charts.
@@ -16,36 +31,36 @@ is a better way to visualise daily data than line charts.
 }
 
 \section{Data Tips}{
- \code{\link{base::strftime}} can help extract the value
+  \link[base]{strftime} can help extract the value
 of the year, week of year, and day of week from the date column. You might
 need to extract the year to facet multiple years as demonstrated in the
-example. \cr\cr
+example.
 This stat uses the following transformation to obtain the x and  y
 coordinate to be used in the heatmap -
-\code{ \cr
-   data$x = 1 + as.integer(strftime(data$date, "\%W")) \cr
-   data$y = as.integer(strftime(data$date, "\%w")) \cr
-   data$y[data$y == 0L] = 7 \cr
-   data$y = 8 - data$y \cr
+\code{
+   data$x = 1 + as.integer(strftime(data$date, "\%W"))
+   data$y = as.integer(strftime(data$date, "\%w"))
+   data$y[data$y == 0L] = 7
+   data$y = 8 - data$y
 }
 }
 
 \section{Cosmetic Tips}{
  The minimalist look can be achieved by appending the
 following chunk of code to the output object:
-\code{ \cr
-+ \cr
-xlab(NULL) + \cr
-ylab(NULL) + \cr
-scale_fill_continuous(low = 'green', high = 'red') + \cr
-theme( \cr
-   axis.text = element_blank(), \cr
-   axis.ticks = element_blank(), \cr
-   legend.position = 'none', \cr
-   strip.background = element_blank(), \cr
-   panel.background = element_blank(), \cr
-   panel.border = element_blank() \cr
-) \cr
+\code{
++
+xlab(NULL) +
+ylab(NULL) +
+scale_fill_continuous(low = 'green', high = 'red') +
+theme(
+   axis.text = element_blank(),
+   axis.ticks = element_blank(),
+   legend.position = 'none',
+   strip.background = element_blank(),
+   panel.background = element_blank(),
+   panel.border = element_blank()
+)
 }
 }
 
@@ -55,6 +70,8 @@ polished but less flexible alternative.
 }
 
 \examples{
+{
+library(ggplot2)
 DailyData = data.frame(
       DateCol = seq(
          as.Date("1/01/2014", "\%d/\%m/\%Y"),
@@ -72,5 +89,5 @@ ggplot(
    )
 ) +
    stat_calendar_heatmap() +
-   facet_wrap(~Year, ncol = 1)
+   facet_wrap(~Year, ncol = 1)}
 }

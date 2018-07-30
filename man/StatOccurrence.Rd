@@ -4,7 +4,7 @@
 \name{StatOccurrence}
 \alias{StatOccurrence}
 \title{Transforms data for an occurrence plot}
-\format{An object of class \code{StatOccurrence} (inherits from \code{Stat}, \code{ggproto}) of length 3.}
+\format{An object of class \code{StatOccurrence} (inherits from \code{Stat}, \code{ggproto}, \code{gg}) of length 3.}
 \usage{
 StatOccurrence
 }

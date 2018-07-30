@@ -7,9 +7,26 @@
 stat_waterfall(mapping = NULL, data = NULL, show.legend = NA,
   inherit.aes = TRUE, na.rm = T, bandwidth = NULL, ...)
 }
-\description{
+\arguments{
+\item{mapping}{mapping}
+
+\item{data}{data}
+
+\item{show.legend}{legend}
+
+\item{inherit.aes}{logical}
+
+\item{na.rm}{logical}
+
+\item{bandwidth}{bandwidth}
+
+\item{...}{more functions
+
 A waterfall plot highlights the change in the time series rather than the
-value of the time series itself.
+value of the time series itself.}
+}
+\description{
+Plot a time series as a waterfall plot
 }
 \section{Aesthetics}{
  stat_waterfall needs x, y
@@ -18,21 +35,21 @@ value of the time series itself.
 \section{Cosmetic Tips}{
  The minimalist look can be achieved by appending the
 following chunk of code to the output object:
-\code{ \cr
-+ \cr
-xlab(NULL) + \cr
-ylab(NULL) + \cr
-theme( \cr
-   axis.text = element_blank(), \cr
-   axis.ticks = element_blank(), \cr
-   legend.position = 'none', \cr
-   strip.background = element_blank(), \cr
-   plot.background = element_blank(), \cr
-   panel.background = element_blank(), \cr
-   panel.border = element_blank(), \cr
-   panel.grid = element_blank(), \cr
-   panel.border = element_blank() \cr
-) \cr
+\code{
++
+xlab(NULL) +
+ylab(NULL) +
+theme(
+   axis.text = element_blank(),
+   axis.ticks = element_blank(),
+   legend.position = 'none',
+   strip.background = element_blank(),
+   plot.background = element_blank(),
+   panel.background = element_blank(),
+   panel.border = element_blank(),
+   panel.grid = element_blank(),
+   panel.border = element_blank()
+)
 }
 }
 
@@ -42,8 +59,10 @@ flexible but less polished alternative.
 }
 
 \examples{
+{
+library(ggplot2)
 set.seed(1)
 dfData = data.frame(x = 1:20, y = cumsum(rnorm(20)))
 ggplot(dfData, aes(x =x, y = y) )+
-   stat_waterfall()
+   stat_waterfall()}
 }
