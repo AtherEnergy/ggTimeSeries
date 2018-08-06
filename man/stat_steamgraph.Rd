@@ -7,11 +7,26 @@
 stat_steamgraph(mapping = NULL, data = NULL, show.legend = NA,
   inherit.aes = TRUE, na.rm = T, ...)
 }
-\description{
-Plots \code{\link{ggplot2::geom_ribbon}}s  for each time series and stacks
+\arguments{
+\item{mapping}{mapping}
+
+\item{data}{data}
+
+\item{show.legend}{logical}
+
+\item{inherit.aes}{logical}
+
+\item{na.rm}{logical}
+
+\item{...}{other functions
+
+Plots  \link[ggplot2]{geom_ribbon}  for each time series and stacks
 them one on top of the other. It's a more aesthetically appealing version
 of a stacked area chart. The groups with the most variance are placed on the
-outside, and the groups with the least variance are placed on the inside.
+outside, and the groups with the least variance are placed on the inside.}
+}
+\description{
+Plot multiple time series as a steamgraph
 }
 \section{Aesthetics}{
  geom_steamgraph needs x, y, group, fill.
@@ -20,35 +35,41 @@ outside, and the groups with the least variance are placed on the inside.
 \section{Cosmetic Tips}{
  The minimalist look can be achieved by appending the
 following chunk of code to the example output object:
-\code{ \cr
-+ \cr
-xlab(NULL) + \cr
-ylab(NULL) + \cr
-theme( \cr
-   axis.text = element_blank(), \cr
-   axis.ticks = element_blank(), \cr
-   legend.position = 'none', \cr
-   strip.background = element_blank(), \cr
-   # strip.text = element_blank(), # useful if only one year of data \cr
-   plot.background = element_blank(), \cr
-   panel.background = element_blank(), \cr
-   panel.border = element_blank(), \cr
-   panel.grid = element_blank(), \cr
-   panel.border = element_blank() \cr
-) + \cr
-coord_fixed( 0.2 * diff(range(df$Time)) / diff(range(df$Signal))) \cr
+\code{
++
+xlab(NULL) +
+ylab(NULL) +
+theme(
+   axis.text = element_blank(),
+   axis.ticks = element_blank(),
+   legend.position = 'none',
+   strip.background = element_blank(),
+   # strip.text = element_blank(), # useful if only one year of data
+   plot.background = element_blank(),
+   panel.background = element_blank(),
+   panel.border = element_blank(),
+   panel.grid = element_blank(),
+   panel.border = element_blank()
+) +
+coord_fixed( 0.2 * diff(range(df$Time)) / diff(range(df$Signal)))
 }
 }
 
 \examples{
+{
+library(ggplot2)
 set.seed(10)
 df = data.frame(
-   Time = 1:1000,
-   Signal = abs(c(cumsum(rnorm(1000, 0, 3)), cumsum(rnorm(1000, 0, 4)), cumsum(rnorm(1000, 0, 1)), cumsum(rnorm(1000, 0, 2)))),
-   Variable = c(rep('a', 1000), rep('b', 1000), rep('c', 1000), rep('d', 1000)),
-   VariableLabel = c(rep('Class A', 1000), rep('Class B', 1000), rep('Class C', 1000), rep('Class D', 1000))
+Time=1:1000,
+Signal=abs(c(cumsum(rnorm(1000, 0, 3)),
+    cumsum(rnorm(1000, 0, 4)), cumsum(rnorm(1000, 0, 1)),
+     cumsum(rnorm(1000, 0, 2)))),
+Variable = c(rep('a', 1000), rep('b', 1000), rep('c',
+    1000), rep('d', 1000)),
+VariableLabel = c(rep('Class A', 1000), rep('Class B',
+    1000), rep('Class C', 1000), rep('Class D', 1000))
 )
 
 ggplot(df, aes(x = Time, y = Signal, group = Variable, fill = VariableLabel)) +
-  stat_steamgraph()
+  stat_steamgraph()}
 }

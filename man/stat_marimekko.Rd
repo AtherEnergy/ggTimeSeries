@@ -7,11 +7,27 @@
 stat_marimekko(mapping = NULL, data = NULL, show.legend = NA,
   inherit.aes = TRUE, na.rm = T, xlabelyposition = NULL, ...)
 }
-\description{
+\arguments{
+\item{mapping}{mapping}
+
+\item{data}{data}
+
+\item{show.legend}{logical}
+
+\item{inherit.aes}{logical}
+
+\item{na.rm}{logical}
+
+\item{xlabelyposition}{position}
+
+\item{...}{other functions
 A marimekko plot, or a mosaic plot, visualises the co-occurrence of two
 categorical / ordinal variables. In a time series, it could be used to
 visualise the transitions from one state to another by considering each
-state to be a category and plotting current category vs. next category.
+state to be a category and plotting current category vs. next category.}
+}
+\description{
+Plot two categorical variables as marimekko
 }
 \section{Aesthetics}{
  xbucket, ybucket, fill. Fill argument needs to be
@@ -21,27 +37,29 @@ assigned to ybucket., or some other column which is a one to one mapping of ybuc
 \section{Cosmetic Tips}{
  The minimalist look can be achieved by appending the
 following chunk of code to the output object:
-\code{ \cr
-+ \cr
-xlab(NULL) + \cr
-ylab(NULL) + \cr
-scale_fill_continuous(low = 'green', high = 'red') + \cr
-theme( \cr
-   axis.text = element_blank(), \cr
-   axis.ticks = element_blank(), \cr
-   legend.position = 'none', \cr
-   strip.background = element_blank(), \cr
-   # strip.text = element_blank(), # useful if only one year of data \cr
-   plot.background = element_blank(), \cr
-   panel.border = element_blank(), \cr
-   panel.background  = element_blank(), \cr
-   panel.grid = element_blank(), \cr
-   panel.border = element_blank() \cr
-) \cr
+\code{
++
+xlab(NULL) +
+ylab(NULL) +
+scale_fill_continuous(low = 'green', high = 'red') +
+theme(
+   axis.text = element_blank(),
+   axis.ticks = element_blank(),
+   legend.position = 'none',
+   strip.background = element_blank(),
+   # strip.text = element_blank(), # useful if only one year of data
+   plot.background = element_blank(),
+   panel.border = element_blank(),
+   panel.background  = element_blank(),
+   panel.grid = element_blank(),
+   panel.border = element_blank()
+)
 }
 }
 
 \examples{
+{
+library(ggplot2)
 ggplot(
    data.frame(
       x1 = round(3 * runif(10000), 0),
@@ -58,5 +76,5 @@ ggplot(
       ),
       xlabelyposition = 1.1,
       color = 'black'
-   )
+   )}
 }

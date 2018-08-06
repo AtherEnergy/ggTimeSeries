@@ -4,7 +4,7 @@
 \name{StatCalendarMonthBreaks}
 \alias{StatCalendarMonthBreaks}
 \title{Transforms data for the month breaks of the calendar heatmap}
-\format{An object of class \code{StatCalendarMonthBreaks} (inherits from \code{Stat}, \code{ggproto}) of length 3.}
+\format{An object of class \code{StatCalendarMonthBreaks} (inherits from \code{Stat}, \code{ggproto}, \code{gg}) of length 3.}
 \usage{
 StatCalendarMonthBreaks
 }

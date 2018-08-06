@@ -45,23 +45,23 @@ stackoverflow.com/questions/22815688/calendar-time-series-with-r.
 \section{Cosmetic Tips}{
  The minimalist look can be achieved by appending the
 following chunk of code to the output object:
-\code{ \cr
-+ \cr
-xlab(NULL) + \cr
-ylab(NULL) + \cr
-scale_fill_continuous(low = 'green', high = 'red') + \cr
-theme( \cr
-   axis.text = element_blank(), \cr
-   axis.ticks = element_blank(), \cr
-   legend.position = 'none', \cr
-   strip.background = element_blank(), \cr
-   # strip.text = element_blank(), # useful if only one year of data \cr
-   plot.background = element_blank(), \cr
-   panel.border = element_blank(), \cr
-   panel.background  = element_blank(), \cr
-   panel.grid = element_blank(), \cr
-   panel.border = element_blank() \cr
-) \cr
+\code{
++
+xlab(NULL) +
+ylab(NULL) +
+scale_fill_continuous(low = 'green', high = 'red') +
+theme(
+   axis.text = element_blank(),
+   axis.ticks = element_blank(),
+   legend.position = 'none',
+   strip.background = element_blank(),
+   # strip.text = element_blank(), # useful if only one year of data
+   plot.background = element_blank(),
+   panel.border = element_blank(),
+   panel.background  = element_blank(),
+   panel.grid = element_blank(),
+   panel.border = element_blank()
+)
 }
 }
 
@@ -71,6 +71,9 @@ flexible but less polished alternative.
 }
 
 \examples{
+{
+library(data.table)
+library(ggplot2)
 set.seed(1)
 dtData = data.table(
       DateCol = seq(
@@ -92,4 +95,5 @@ p1
 p1 +
 geom_text(label = '!!!') +
 scale_colour_continuous(low = 'red', high = 'green')
+}
 }

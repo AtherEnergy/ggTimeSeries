@@ -4,7 +4,7 @@
 \name{StatSteamgraph}
 \alias{StatSteamgraph}
 \title{Transforms data for a steam graph}
-\format{An object of class \code{StatSteamgraph} (inherits from \code{Stat}, \code{ggproto}) of length 4.}
+\format{An object of class \code{StatSteamgraph} (inherits from \code{Stat}, \code{ggproto}, \code{gg}) of length 4.}
 \usage{
 StatSteamgraph
 }
