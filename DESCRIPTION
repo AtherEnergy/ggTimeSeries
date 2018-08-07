@@ -10,7 +10,7 @@ Authors@R: c(
     person("Ather",
       role = "cph"),
     person("Jesse", "Vent", email = "cryptopackage@icloud.com",
-      role = c("aut", "ctb")))
+      role = c("ctb")))
 Description: Provides additional display mediums for time series visualisations.
 URL: https://github.com/Ather-Energy/ggTimeSeries
 BugReports: https://github.com/Ather-Energy/ggTimeSeries/issues
