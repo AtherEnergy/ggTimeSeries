@@ -2,7 +2,6 @@
 .Rhistory
 .RData
 ..Rcheck
-inst/doc
 ^.*\.Rproj$
 ^.*\.RData$
 ^.*\.Rhistory$
