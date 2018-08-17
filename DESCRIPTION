@@ -4,11 +4,21 @@ Title: Time Series Visualisations Using the Grammar of Graphics
 Version: 1.0.1
 Date: 2018-08-17
 Maintainer: Aditya Kothari <aditya.kothari@atherenergy.com>
+<<<<<<< HEAD
 Author: as.person(c(
     "Aditya Kothari <aditya.kothari@atherenergy.com> [aut,cre]", 
     "Ather Energy <info@atherenergy.com> [cph]", 
     "Jesse Vent <cryptopackage@icloud.com> [ctb] (Ensuring the package met CRAN requirements)"
     ))
+=======
+Authors@R: c(
+    person("Aditya", "Kothari", email = "aditya.kothari@atherenergy.com",
+      role = c("aut", "cre")),
+    person("Ather",
+      role = "cph"),
+    person("Jesse", "Vent", email = "cryptopackage@icloud.com",
+      role = c("ctb")))
+>>>>>>> 0963902337f89b67a82318a99f4eb0f89a75c2e9
 Description: Provides additional display mediums for time series visualisations.
 URL: https://github.com/Ather-Energy/ggTimeSeries
 BugReports: https://github.com/Ather-Energy/ggTimeSeries/issues
