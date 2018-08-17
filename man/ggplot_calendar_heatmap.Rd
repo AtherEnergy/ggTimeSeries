@@ -6,8 +6,9 @@
 \usage{
 ggplot_calendar_heatmap(dtDateValue, cDateColumnName = "",
   cValueColumnName = "", vcGroupingColumnNames = "Year",
-  dayBorderSize = 0.25, dayBorderColour = "black", monthBorderSize = 2,
-  monthBorderColour = "black", monthBorderLineEnd = "round")
+  dayBorderSize = 0.25, dayBorderColour = "black",
+  monthBorderSize = 2, monthBorderColour = "black",
+  monthBorderLineEnd = "round")
 }
 \arguments{
 \item{dtDateValue}{Data set which may include other columns apart from date

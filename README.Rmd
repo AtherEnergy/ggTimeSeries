@@ -1,5 +1,17 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
 
 ## About
 
@@ -20,12 +32,12 @@ line charts. Line charts have reportedly been around since the early
 facilitate trend detection and comparison, are simple to draw, and easy
 to understand; all in all a very well behaved visualisation. In modern
 times, their use is widespread from the heartbeat monitor at a hospital
-to the multiple-monitor display at a trader’s desk.
+to the multiple-monitor display at a trader’s
+desk.
 
     ## [1] "Excel 97 look recreated in R with the ggthemes package"
 
-![Excel97
-Linechart](https://github.com/JesseVent/ggTimeSeries/blob/581fa14a6bbf71dd1c30190244ffdce9646900e1/README_files/figure-markdown_strict/excel97_line-1.png?raw=true)
+![Excel97 Linechart](https://github.com/JesseVent/ggTimeSeries/blob/581fa14a6bbf71dd1c30190244ffdce9646900e1/README_files/figure-markdown_strict/excel97_line-1.png?raw=true)
 
 ## Alternatives
 
@@ -36,7 +48,7 @@ functions in the `ggplot2` based `ggTimeSeries` package.
 
 Before that, setting a minimal theme -
 
-``` r
+```r
 minimalTheme = theme_set(theme_bw(12))
 minimalTheme = theme_update(
    axis.ticks = element_blank(),
@@ -55,7 +67,7 @@ Available as `stat_calendar_heatmap` and `ggplot_calendar_heatmap`.
 A calendar heatmap is a great way to visualise daily data. Its structure
 makes it easy to detect weekly, monthly, or seasonal patterns.
 
-``` r
+```r
 # creating some data
 set.seed(1)
 dtData = data.table(
@@ -83,11 +95,9 @@ p1 +
    scale_fill_continuous(low = 'green', high = 'red') +
    facet_wrap(~Year, ncol = 1)
 ```
+![Calendar Heatmap](https://github.com/JesseVent/ggTimeSeries/blob/581fa14a6bbf71dd1c30190244ffdce9646900e1/README_files/figure-markdown_strict/calendar_heatmap-1.png?raw=true)
 
-![Calendar
-Heatmap](https://github.com/JesseVent/ggTimeSeries/blob/581fa14a6bbf71dd1c30190244ffdce9646900e1/README_files/figure-markdown_strict/calendar_heatmap-1.png?raw=true)
-
-``` r
+```r
 # creating some categorical data
 dtData[, CategCol := letters[1 + round(ValueCol * 7)]]
 
@@ -105,8 +115,7 @@ p2 +
    facet_wrap(~Year, ncol = 1)
 ```
 
-![Calendar Heatmap
-2](https://github.com/JesseVent/ggTimeSeries/blob/581fa14a6bbf71dd1c30190244ffdce9646900e1/README_files/figure-markdown_strict/calendar_heatmap-2.png?raw=true)
+![Calendar Heatmap 2](https://github.com/JesseVent/ggTimeSeries/blob/581fa14a6bbf71dd1c30190244ffdce9646900e1/README_files/figure-markdown_strict/calendar_heatmap-2.png?raw=true)
 
 ### Horizon Plots
 
@@ -119,7 +128,7 @@ Horizon plots are useful when visualising y values spanning a vast range
 but with a skewed distribution, and / or trying to highlight outliers
 without losing context of variation in the rest of the data.
 
-``` r
+```r
 # creating some data
 set.seed(1)
 dfData = data.frame(x = 1:1000, y = cumsum(rnorm(1000)))
@@ -133,7 +142,7 @@ print("If you're seeing any vertical white stripes, it's a display thing.")
 
     ## [1] "If you're seeing any vertical white stripes, it's a display thing."
 
-``` r
+```r
 # adding some formatting
 p1 +
    xlab(NULL) +
@@ -142,8 +151,7 @@ p1 +
    coord_fixed( 0.5 * diff(range(dfData$x)) / diff(range(dfData$y)))
 ```
 
-![Horizon
-Plot](https://github.com/JesseVent/ggTimeSeries/blob/581fa14a6bbf71dd1c30190244ffdce9646900e1/README_files/figure-markdown_strict/horizon-1.png?raw=true)
+![Horizon Plot](https://github.com/JesseVent/ggTimeSeries/blob/581fa14a6bbf71dd1c30190244ffdce9646900e1/README_files/figure-markdown_strict/horizon-1.png?raw=true)
 
 ### Steamgraphs
 
@@ -157,7 +165,7 @@ centred alignment of each of the contributing areas makes it easier for
 the viewer to compare the contribution of any of the components across
 time.
 
-``` r
+```r
 # creating some data
 set.seed(10)
 dfData = data.frame(
@@ -185,8 +193,7 @@ p1 +
    coord_fixed( 0.2 * diff(range(dfData$Time)) / diff(range(dfData$Signal)))
 ```
 
-![Steamgraph
-Plot](https://github.com/JesseVent/ggTimeSeries/blob/581fa14a6bbf71dd1c30190244ffdce9646900e1/README_files/figure-markdown_strict/steamgraph-1.png?raw=true)
+![Steamgraph Plot](https://github.com/JesseVent/ggTimeSeries/blob/581fa14a6bbf71dd1c30190244ffdce9646900e1/README_files/figure-markdown_strict/steamgraph-1.png?raw=true)
 
 ### Waterfall
 
@@ -195,7 +202,7 @@ Available as `stat_waterfall` and `ggplot_waterfall`.
 Rather than the values itself, a waterfall plot tries to bring out the
 changes in the values.
 
-``` r
+```r
 # creating some data
 set.seed(1)
 dfData = data.frame(x = 1:100, y = cumsum(rnorm(100)))
@@ -213,8 +220,7 @@ p1 +
    ylab(NULL)
 ```
 
-![Waterfall
-Plot](https://github.com/JesseVent/ggTimeSeries/blob/581fa14a6bbf71dd1c30190244ffdce9646900e1/README_files/figure-markdown_strict/waterfall-1.png?raw=true)
+![Waterfall Plot](https://github.com/JesseVent/ggTimeSeries/blob/581fa14a6bbf71dd1c30190244ffdce9646900e1/README_files/figure-markdown_strict/waterfall-1.png?raw=true)
 
 ### Occurrence Dot Plot
 
@@ -224,7 +230,7 @@ This one is a favourite in infographics. For rare events, the reader
 would find it convenient to have the count of events encoded in the
 chart itself instead of having to map the value back to the Y axis.
 
-``` r
+```r
 # creating some data
 set.seed(1)
 dfData = data.table(x = 1:100, y = floor(4 * abs(rnorm(100, 0 , 0.4))))
@@ -240,8 +246,7 @@ p1 +
    coord_fixed(ylim = c(0,1 + max(dfData$y)))
 ```
 
-![Occurance
-Dotplot](https://github.com/JesseVent/ggTimeSeries/blob/581fa14a6bbf71dd1c30190244ffdce9646900e1/README_files/figure-markdown_strict/occurrence_dotplot-1.png?raw=true)
+![Occurance Dotplot](https://github.com/JesseVent/ggTimeSeries/blob/581fa14a6bbf71dd1c30190244ffdce9646900e1/README_files/figure-markdown_strict/occurrence_dotplot-1.png?raw=true)
 
 ### Marimekko or Mosaik
 
@@ -251,14 +256,14 @@ A marimekko plot, or a mosaic plot, visualises the co-occurrence of two
 categorical / ordinal variables. In case of a time series, it could be
 used to visualise the proportion of transitions from one state to
 another by considering each state to be a category and plotting the
-occurrence of current category vs. the next category. The span on the
+occurrence of current category vs. the next category. The span on the
 horizontal represents the overall occurrence of the xbucket argument.
 The span on the vertical represents the marginal occurrence of the
 ybucket argument when xbucket was the previous state. The area of a
 block indicates the proportion of occurrence of that pair in the entire
 dataset.
 
-``` r
+```r
 # creating some data
 set.seed(1)
 
@@ -282,5 +287,4 @@ p1 +
    scale_y_continuous(breaks = 0:10/10)
 ```
 
-![Marimekko
-Plot](https://github.com/JesseVent/ggTimeSeries/blob/581fa14a6bbf71dd1c30190244ffdce9646900e1/README_files/figure-markdown_strict/marimekko-1.png?raw=true)
+![Marimekko Plot](https://github.com/JesseVent/ggTimeSeries/blob/581fa14a6bbf71dd1c30190244ffdce9646900e1/README_files/figure-markdown_strict/marimekko-1.png?raw=true)

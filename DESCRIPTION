@@ -1,16 +1,14 @@
 Package: ggTimeSeries
 Type: Package
 Title: Time Series Visualisations Using the Grammar of Graphics
-Version: 1.0.0
-Date: 2018-07-30
+Version: 1.0.1
+Date: 2018-08-17
 Maintainer: Aditya Kothari <aditya.kothari@atherenergy.com>
-Authors@R: c(
-    person("Aditya", "Kothari", email = "aditya.kothari@atherenergy.com",
-      role = c("aut", "cre")),
-    person("Ather",
-      role = "cph"),
-    person("Jesse", "Vent", email = "cryptopackage@icloud.com",
-      role = c("aut", "ctb")))
+Author: as.person(c(
+    "Aditya Kothari <aditya.kothari@atherenergy.com> [aut,cre]", 
+    "Ather Energy <info@atherenergy.com> [cph]", 
+    "Jesse Vent <cryptopackage@icloud.com> [ctb] (Ensuring the package met CRAN requirements)"
+    ))
 Description: Provides additional display mediums for time series visualisations.
 URL: https://github.com/Ather-Energy/ggTimeSeries
 BugReports: https://github.com/Ather-Energy/ggTimeSeries/issues
@@ -21,8 +19,10 @@ Depends: R (>= 3.4.0), ggplot2
 Imports: data.table,
     stats,
     utils
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 Suggests: knitr,
     rmarkdown,
-    ggthemes
-VignetteBuilder: knitr
+    ggthemes,
+    prettydoc
+VignetteBuilder: knitr,
+    rmarkdown
