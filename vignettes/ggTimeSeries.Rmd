@@ -2,10 +2,7 @@
 title: "ggTimeSeries"
 author: "Aditya Kothari"
 date: "`r Sys.Date()`"
-output: 
-   rmarkdown::html_vignette:
-    fig_width: 6
-    fig_height: 3
+output: prettydoc::html_pretty
 vignette: >
   %\VignetteIndexEntry{Introduction to ggTimeSeries}
   %\VignetteEngine{knitr::rmarkdown}
@@ -15,7 +12,9 @@ vignette: >
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.width = 6,
+  fig.height = 3
 )
 ```
 

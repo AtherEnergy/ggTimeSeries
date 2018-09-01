@@ -45,6 +45,10 @@
 #' ggplot scales to modify the look, add more geoms, etc.
 #' @import data.table
 #' @import ggplot2
+#' @import stats
+#'
+#' @importFrom utils "globalVariables"
+#'
 #' @export
 #' @examples {
 #' library(data.table)

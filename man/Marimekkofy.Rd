@@ -4,7 +4,8 @@
 \alias{Marimekkofy}
 \title{Marimekkofy}
 \usage{
-Marimekkofy(data, xbucket = "xbucket", ybucket = "ybucket", weight = NULL)
+Marimekkofy(data, xbucket = "xbucket", ybucket = "ybucket",
+  weight = NULL)
 }
 \arguments{
 \item{data}{dataframe}

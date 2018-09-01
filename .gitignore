@@ -1,4 +1,11 @@
 .Rproj.user
 .Rhistory
 .RData
-inst/doc
+..Rcheck
+^.*\.Rproj$
+^.*\.RData$
+^.*\.Rhistory$
+^.*\.tar.gz$
+^\.Rproj\.user$
+^.*\.Rproj.user
+^.*\.git
