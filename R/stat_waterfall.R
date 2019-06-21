@@ -51,7 +51,7 @@ StatWaterfall <- ggproto(
 #' )
 #' }
 #' @section Also See: \code{\link{ggplot_waterfall}}, a
-#' flexible but less polished alternative.
+#' less flexible but more polished alternative.
 #' @export
 #' @import ggplot2
 #' @examples {
