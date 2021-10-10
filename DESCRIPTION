@@ -23,6 +23,7 @@ RoxygenNote: 6.1.0
 Suggests: knitr,
     rmarkdown,
     ggthemes,
-    prettydoc
+    prettydoc,
+    rcmdcheck
 VignetteBuilder: knitr,
     rmarkdown
